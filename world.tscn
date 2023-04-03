@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqn1rat3ejg07"]
+
+[ext_resource type="Texture2D" uid="uid://c7ng4s3v5117t" path="res://assets/prototype_512x512_blue1.png" id="1_n01wc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hinta"]
+albedo_texture = ExtResource("1_n01wc")
+uv1_scale = Vector3(200, 200, 200)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_314qq"]
+material = SubResource("StandardMaterial3D_hinta")
+size = Vector2(200, 200)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e1wku"]
+points = PackedVector3Array(-100, 0, -100, -100, 0, 100, 100, 0, -100, 100, 0, 100)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_314qq")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_e1wku")
