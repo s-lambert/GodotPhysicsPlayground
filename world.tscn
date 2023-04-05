@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqn1rat3ejg07"]
+[gd_scene load_steps=14 format=3 uid="uid://dqn1rat3ejg07"]
 
 [ext_resource type="Texture2D" uid="uid://c7ng4s3v5117t" path="res://assets/prototype_512x512_blue1.png" id="1_n01wc"]
-[ext_resource type="Script" path="res://player.gd" id="2_yeeci"]
-[ext_resource type="Script" path="res://enemy.gd" id="3_3827f"]
+[ext_resource type="PackedScene" uid="uid://buvstkh4lx6y5" path="res://player.tscn" id="2_koh3k"]
+[ext_resource type="PackedScene" uid="uid://2aalduy2omfc" path="res://enemy.tscn" id="3_dtxsh"]
+[ext_resource type="PackedScene" uid="uid://cfrtjbm3ha06i" path="res://ui.tscn" id="4_p2ohs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vxhp8"]
 sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
@@ -30,9 +31,20 @@ size = Vector2(200, 200)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e1wku"]
 points = PackedVector3Array(-100, 0, -100, -100, 0, 100, 100, 0, -100, 100, 0, 100)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejdg3"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_c0y5o"]
+viewport_path = NodePath("Player/Camera3D/MeshInstance3D/UI")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_gxckv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvnde"]
+resource_local_to_scene = true
+render_priority = -1
+transparency = 1
+no_depth_test = true
+albedo_color = Color(1, 1, 1, 0.784314)
+albedo_texture = SubResource("ViewportTexture_c0y5o")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tmp1p"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_vvnde")
 
 [node name="World" type="Node3D"]
 
@@ -52,10 +64,7 @@ skeleton = NodePath("StaticBody3D")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_e1wku")
 
-[node name="Player" type="CharacterBody3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("2_yeeci")
+[node name="Player" parent="." instance=ExtResource("2_koh3k")]
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 4)
@@ -64,20 +73,12 @@ current = true
 fov = 90.0
 size = 0.1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_ejdg3")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Camera3D"]
+transform = Transform3D(4, 0, 0, 0, -1.74846e-07, -4, 0, 4, -1.74846e-07, 0, 0, -8)
+mesh = SubResource("PlaneMesh_tmp1p")
+skeleton = NodePath("../../..")
 
-[node name="PlayerModel" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("CapsuleMesh_gxckv")
-skeleton = NodePath("../..")
+[node name="UI" parent="Player/Camera3D/MeshInstance3D" instance=ExtResource("4_p2ohs")]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -11)
-script = ExtResource("3_3827f")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_ejdg3")
-
-[node name="PlayerModel" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_gxckv")
-skeleton = NodePath("../..")
+[node name="Enemy" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_dtxsh")]
+target = NodePath("../Player")

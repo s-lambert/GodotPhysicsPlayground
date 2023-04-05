@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://buvstkh4lx6y5"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_5m5rr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ejdg3"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_gxckv"]
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_5m5rr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ejdg3")
+
+[node name="PlayerModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_gxckv")
+skeleton = NodePath("../..")
+
+[node name="GunPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
