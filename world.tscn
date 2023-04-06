@@ -81,10 +81,14 @@ skeleton = NodePath("../..")
 [node name="UIViewport" type="SubViewport" parent="Player/MeshInstance3D"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(256, 256)
+size = Vector2i(128, 128)
 render_target_update_mode = 4
 
 [node name="UI" parent="Player/MeshInstance3D/UIViewport" instance=ExtResource("4_4ml2n")]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
 
 [node name="Enemy" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_dtxsh")]
 target = NodePath("../Player")

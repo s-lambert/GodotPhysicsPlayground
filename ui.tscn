@@ -1,18 +1,42 @@
-[gd_scene load_steps=2 format=3 uid="uid://das5g2yt1u1rh"]
+[gd_scene load_steps=3 format=3 uid="uid://das5g2yt1u1rh"]
 
 [ext_resource type="Texture2D" uid="uid://dw06ix671pntg" path="res://icon.svg" id="1_xfgkm"]
+[ext_resource type="Script" path="res://crosshair.gd" id="2_02nu5"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
-anchor_right = 0.222
-anchor_bottom = 0.395
-offset_right = 0.255981
-offset_bottom = 0.0399933
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -576.0
+offset_bottom = -324.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
+visible = false
 texture = ExtResource("1_xfgkm")
 centered = false
+
+[node name="CrosshairContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair" type="Node2D" parent="CrosshairContainer"]
+script = ExtResource("2_02nu5")
