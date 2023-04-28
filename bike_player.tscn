@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dj2trjvgq4wph"]
+
+[ext_resource type="Script" path="res://motorcycle.gd" id="1_geekn"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7pq5f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mxkk0"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_geekn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
+mesh = SubResource("CapsuleMesh_7pq5f")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_mxkk0")
+
+[node name="FrontWheelRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1)
+target_position = Vector3(0, -0.5, 0)
+
+[node name="RearWheelRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+target_position = Vector3(0, -0.5, 0)

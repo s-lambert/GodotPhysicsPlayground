@@ -12,7 +12,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	else: 
+	elif target != null: 
 		var target_position = target.global_position
 		var enemy_position = self.global_position
 		var difference = target_position - enemy_position
